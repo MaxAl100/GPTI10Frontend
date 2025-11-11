@@ -1,0 +1,70 @@
+.event-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.event-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* === INFO === */
+.event-info {
+  flex-grow: 1;
+}
+
+.event-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2E86DE;
+  margin: 8px 0;
+  line-height: 1.3;
+  max-height: 2.6em; /* máx. 2 líneas */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+.event-location,
+.event-date {
+  color: #444;
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+.event-card a {
+  text-decoration: none;
+}
+
+.event-card button {
+  margin-top: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background-color: #2E86DE;
+  color: white;
+  font-weight: 500;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.event-card button:hover {
+  background-color: #256bbd;
+}

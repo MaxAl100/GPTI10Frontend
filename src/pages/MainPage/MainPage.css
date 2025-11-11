@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+/* === BARRA DE FILTROS === */
+.barra-filtros {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 60px;
+  background-color: #f4f4f4;
+  flex-wrap: wrap;
+}
+
+/* === TÍTULO === */
+.titulo-seccion {
+  font-family: "Inter", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+/* === CONTENEDOR DERECHA === */
+.filtros-derecha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* === BOTONES === */
+.btn-filtro,
+.btn-ordenar {
+  background-color: #2E86DE;
+  color: #F4F4F4;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  font-family: "Inter", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-filtro:hover,
+.btn-ordenar:hover {
+  background-color: rgba(46, 134, 222, 0.5);
+  transform: translateY(-1px);
+}
+
+/* === MENÚ DESPLEGABLE === */
+.ordenar-container {
+  position: relative;
+}
+
+.ordenar-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  color: #333;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border-radius: 8px;
+  width: 180px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 20;
+  font-family: "Inter", sans-serif;
+}
+
+.ordenar-menu li {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ordenar-menu li:hover {
+  background: rgba(46, 134, 222, 0.1);
+}
+
+/* === GRILLA DE EVENTOS === */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 20px 60px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .barra-filtros {
+    padding: 20px 30px;
+  }
+
+  .event-grid {
+    padding: 20px 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .barra-filtros {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 20px;
+  }
+
+  .filtros-derecha {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-filtro,
+  .btn-ordenar {
+    flex: 1;
+  }
+
+  .ordenar-menu {
+    width: 100%;
+  }
+
+  .titulo-seccion {
+    font-size: 1.4rem;
+  }
+}
