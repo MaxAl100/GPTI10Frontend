@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+/* === FOOTER GENERAL === */
+.footer {
+  background-color: #2E86DE; /* Azul institucional */
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+  padding: 50px 0 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Contenedor centrado */
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* === ESTRUCTURA PRINCIPAL === */
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  flex-wrap: nowrap;
+}
+
+/* === SECCIONES === */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.footer-section p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  line-height: 1.5;
+}
+
+.footer-section a {
+  text-decoration: none;
+  color: #f4f4f4;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+  color: #a0c0f8;
+}
+
+/* === EMAIL === */
+.email-link {
+  color: #f4f4f4;
+  text-decoration: underline;
+}
+.email-link:hover {
+  color: #fff;
+}
+
+/* === LÍNEA INFERIOR === */
+.footer-bottom {
+  text-align: center;
+  margin-top: 25px;
+  color: #f4f4f4;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* === RESPONSIVE: IPAD Y TABLET === */
+@media (max-width: 1200px) {
+  .footer-main {
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+}
+
+/* === CELULAR === */
+@media (max-width: 700px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+  }
+
+  .footer-section {
+    width: 100%;
+  }
+
+  .footer-bottom {
+    font-size: 0.85rem;
+  }
+}
