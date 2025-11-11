@@ -1,5 +1,7 @@
 import EventCard from "../components/EventCard";
 import "./MainPage.css";
+import EventList from "../components/EventList";
+
 
 export default function Home() {
   const eventos = [
@@ -15,6 +17,9 @@ export default function Home() {
         <p>Conecta con experiencias únicas y personas increíbles.</p>
         <button className="explorar-btn">Explorar</button>
       </section>
+
+      <EventList />
+
 
       <section className="eventos">
         <h3>Eventos destacados</h3>
