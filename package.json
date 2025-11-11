@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://maxal100.github.io/GPTI10Frontend",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
