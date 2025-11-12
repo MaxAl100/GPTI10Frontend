@@ -6,7 +6,7 @@ import "./MainPage.css";
 
 export default function MainPage() {
   const [events, setEvents] = useState([]);
-  const [showOptions, setShowOptions] = useState(false); // ✅ ahora declarada correctamente
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     const baseURL = import.meta.env.BASE_URL || "/";
@@ -22,9 +22,7 @@ export default function MainPage() {
   }, []);
 
   return (
-    <>
-
-
+    <div className="mainpage-wrapper">
       <main style={{ backgroundColor: "#f4f4f4", minHeight: "80vh" }}>
         {/* === BARRA DE FILTRO Y ORDENAR === */}
         <div className="barra-filtros">
@@ -63,7 +61,7 @@ export default function MainPage() {
                 title={event.title}
                 date={event.date}
                 location={event.location}
-                image_url={event.image_url}
+                image_url={event.image_url} // 👈 intacto
                 link={event.link}
               />
             ))
@@ -81,6 +79,6 @@ export default function MainPage() {
           )}
         </div>
       </main>
-    </>
+    </div>
   );
 }
