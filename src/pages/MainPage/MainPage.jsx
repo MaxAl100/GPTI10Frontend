@@ -9,17 +9,18 @@ export default function MainPage() {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
-    const baseURL = import.meta.env.BASE_URL || "/";
-    const dataPath = `${baseURL}data/ejemplos.json`;
+    // URL del backend donde está alojada la API
+    const apiURL = "http://localhost:8000/api/events/";
 
-    fetch(dataPath)
+    // Realiza la solicitud a la API para obtener los eventos
+    fetch(apiURL)
       .then((res) => {
-        if (!res.ok) throw new Error("Error al cargar JSON");
+        if (!res.ok) throw new Error("Error al cargar eventos");
         return res.json();
       })
-      .then((data) => setEvents(data.results))
+      .then((data) => setEvents(data.results)) // Asigna los eventos al estado
       .catch((err) => console.error("Error al cargar datos:", err));
-  }, []);
+  }, []); // El arreglo vacío [] asegura que esto se ejecute solo una vez al cargar la página
 
   return (
     <div className="mainpage-wrapper">
