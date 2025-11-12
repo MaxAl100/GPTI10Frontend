@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { useState, useRef, useEffect } from "react";
 import { FaUser, FaMapMarkerAlt, FaBars, FaSearch } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 
 export default function Navbar() {
@@ -8,6 +9,7 @@ export default function Navbar() {
   const [address, setAddress] = useState("Santiago");
   const addressRef = useRef(null);
   const tooltipRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -30,7 +32,9 @@ export default function Navbar() {
       {/* === BARRA SUPERIOR === */}
       <div className="topbar">
         <div className="left-section">
-          <img src={logo} alt="Logo FunFindr" className="logo-img" />
+          <Link to="/">
+            <img src={logo} alt="Logo FunFindr" className="logo-img" />
+          </Link>
         </div>
 
         <div className="right-section">
@@ -44,7 +48,7 @@ export default function Navbar() {
           </div>
 
           <div className="actions">
-            <button>
+            <button className="navbar-login" onClick={() => navigate("/login")}>
               <FaUser /> Iniciar sesión
             </button>
           </div>
@@ -55,9 +59,9 @@ export default function Navbar() {
       <nav className="menu-scroll">
         <div className="menu-container">
           <div className="menu-links">
-            <a href="#">
+            <Link to="/">
               <FaBars className="menu-icon" /> Panoramas
-            </a>
+            </Link>
             <span className="separator">|</span>
             <a href="#">Populares</a>
             <span className="separator">|</span>
@@ -74,7 +78,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-
+      
       {/* === TOOLTIP DE UBICACIÓN === */}
       {showTooltip && (
         <div
