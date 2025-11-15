@@ -1,0 +1,87 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 18px;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+.modal-icon {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Iconos */
+.modal-icon.success {
+  background-color: rgba(46, 134, 222, 0.15);
+  color: #2E86DE;
+}
+
+.modal-icon.error {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #E74C3C;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2E86DE;
+  margin-bottom: 10px;
+}
+
+.modal-message {
+  color: #444;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.modal-button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: white;
+  font-weight: 500;
+}
+
+.modal-button.success {
+  background-color: #2E86DE;
+}
+
+.modal-button.success:hover {
+  background-color: #1d6ec0;
+}
+
+.modal-button.error {
+  background-color: #E74C3C;
+}
+
+.modal-button.error:hover {
+  background-color: #c0392b;
+}
