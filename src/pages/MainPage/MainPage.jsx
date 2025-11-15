@@ -3,6 +3,8 @@ import Footer from "../../components/Footer/Footer";
 import EventCard from "../../components/EventCard/EventCard";
 import { useEffect, useState } from "react";
 import "./MainPage.css";
+import { getToken } from "../../api/auth";
+
 
 export default function MainPage() {
   const [events, setEvents] = useState([]);
@@ -113,7 +115,13 @@ export default function MainPage() {
 
   // === CARGA DE EVENTOS DESDE EL BACKEND ===
   useEffect(() => {
-    fetch("http://localhost:8000/api/events/")
+    const token = getToken();
+
+    fetch("http://localhost:8000/api/events/", {
+      headers: token
+        ? { Authorization: `Bearer ${token}` }
+        : {}
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Error al cargar eventos");
         return res.json();
@@ -121,6 +129,7 @@ export default function MainPage() {
       .then((data) => setEvents(data.results))
       .catch((err) => console.error("Error al cargar datos:", err));
   }, []);
+
 
   return (
     <div className="mainpage-wrapper">
