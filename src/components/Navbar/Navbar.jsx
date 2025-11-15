@@ -10,6 +10,27 @@ export default function Navbar() {
   const addressRef = useRef(null);
   const tooltipRef = useRef(null);
   const navigate = useNavigate();
+  const loggedIn = Boolean(localStorage.getItem("token"));
+
+
+  const [user, setUser] = useState({
+    name: localStorage.getItem("name"),
+    email: localStorage.getItem("email"),
+    token: localStorage.getItem("token")
+  });
+
+  useEffect(() => {
+    const updateUser = () => {
+      setUser({
+        name: localStorage.getItem("name"),
+        email: localStorage.getItem("email"),
+        token: localStorage.getItem("token"),
+      });
+    };
+
+  window.addEventListener("storage", updateUser);
+  return () => window.removeEventListener("storage", updateUser);
+}, []);
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -48,9 +69,16 @@ export default function Navbar() {
           </div>
 
           <div className="actions">
-            <button className="navbar-login" onClick={() => navigate("/login")}>
-              <FaUser /> Iniciar sesión
-            </button>
+            {loggedIn ? (
+              <button className="navbar-login" onClick={() => navigate("/profile")}>
+                <FaUser /> Perfil
+              </button>
+            ) : (
+              <button className="navbar-login" onClick={() => navigate("/login")}>
+                <FaUser /> Iniciar sesión
+              </button>
+            )}
+
           </div>
         </div>
       </div>
