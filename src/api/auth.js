@@ -19,3 +19,7 @@ export async function loginUser(credentials) {
 
   return await res.json();
 }
+
+export function getToken() {
+  return localStorage.getItem("token");
+}
