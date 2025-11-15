@@ -20,3 +20,14 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+
