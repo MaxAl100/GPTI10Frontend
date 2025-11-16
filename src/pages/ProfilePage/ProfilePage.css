@@ -1,87 +1,71 @@
-.profile-container {
-  min-height: 75vh;
+/* Contenedor general */
+.profile-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Encabezado */
+.profile-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background: #f4f4f4;
-  font-family: "Inter", sans-serif;
 }
 
-.profile-card {
-  background: white;
-  padding: 40px 50px;
-  border-radius: 20px;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-  max-width: 450px;
-  width: 90%;
-  text-align: center;
+.profile-info-left {
+  display: flex;
+  flex-direction: column;
 }
 
-.profile-title {
-  color: #2e86de;
-  font-size: 26px;
-  margin-bottom: 20px;
-  font-weight: 600;
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.profile-info p {
-  color: #333;
-  font-size: 16px;
-  margin-bottom: 25px;
+.profile-email {
+  color: #444;
 }
 
 .logout-btn {
-  background-color: #e74c3c;
+  background-color: #d9534f;
   color: white;
   border: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 25px;
+  font-weight: bold;
 }
 
 .logout-btn:hover {
-  background-color: #c0392b;
+  background-color: #c64440;
 }
 
-.profile-divider {
-  margin: 25px 0;
+.header-divider {
+  margin: 20px 0;
   border: none;
-  height: 1px;
-  background: #ddd;
+  border-top: 1px solid #ddd;
 }
 
-.saved-section {
-  text-align: left;
-}
-
+/* Título */
 .saved-title {
-  color: #2e86de;
-  font-size: 20px;
-  margin-bottom: 8px;
-  font-weight: 600;
+  font-size: 1.5rem;
+  color: #1d5bc9;
+  margin-bottom: 20px;
 }
 
-.saved-subtitle {
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.saved-empty-box {
-  background: #f4f4f4;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  color: #777;
-  font-size: 15px;
-  border: 1px solid #e0e0e0;
-}
-
-.saved-list {
-  margin-top: 20px;
+/* Grid idéntico al Home */
+.saved-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Texto vacío / carga */
+.loading-text,
+.empty-text {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
 }
