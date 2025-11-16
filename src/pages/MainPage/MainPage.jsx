@@ -107,7 +107,17 @@ export default function MainPage() {
       sorted.sort((a, b) => b.title.localeCompare(a.title));
     }
 
-    // "Destacado" aún no hace nada
+    if (type === "destacado") {
+      sorted.sort((a, b) => {
+        // Primero: más guardados
+        if (b.saved_count !== a.saved_count) {
+          return b.saved_count - a.saved_count;
+        }
+        // Desempate: orden alfabético
+        return a.title.localeCompare(b.title);
+      });
+    }
+
 
     setEvents(sorted);
     setShowOptions(false);
