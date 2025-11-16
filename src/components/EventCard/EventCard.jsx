@@ -68,6 +68,7 @@ export default function EventCard({
 
   return (
     <div className="event-card">
+
       <img
         src={src}
         alt={title}
@@ -76,27 +77,25 @@ export default function EventCard({
       />
 
       <div className="event-info">
-        <h3 className="event-title">{title}</h3>
+        {/* TÍTULO (2 líneas máximo, con ...) */}
+        <h3 className="event-title fixed-title">{title}</h3>
+
         <p className="event-location">📍 {location}</p>
         <p className="event-date">📅 {date}</p>
 
+        {/* BOTÓN VER MÁS */}
+        <a href={link} target="_blank" rel="noreferrer">
+          <button className="primary ver-mas-btn">Ver más</button>
+        </a>
+
+        {/* BOTÓN GUARDAR */}
         <button
-          className="save-btn"
+          className={`save-btn ${saved ? "saved" : ""}`}
           onClick={toggleSave}
-          style={{
-            background: saved ? "#ffd54f" : "#eee",
-            border: "1px solid #ccc",
-            marginTop: "8px",
-            cursor: "pointer",
-          }}
         >
           {saved ? "★ Guardado" : "☆ Guardar"} ({saveCount})
         </button>
       </div>
-
-      <a href={link} target="_blank" rel="noreferrer">
-        <button className="primary">Ver más</button>
-      </a>
     </div>
   );
 }

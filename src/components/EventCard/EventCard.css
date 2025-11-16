@@ -11,6 +11,13 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.event-info {
+  flex: 1;               
+  display: flex;
+  flex-direction: column;
+}
+
+
 .event-card:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -35,7 +42,7 @@
   color: #2E86DE;
   margin: 8px 0;
   line-height: 1.3;
-  max-height: 2.6em; /* máx. 2 líneas */
+  max-height: 2.6em; 
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
@@ -67,4 +74,86 @@
 
 .event-card button:hover {
   background-color: #256bbd;
+}
+
+/* Contenedor general */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 12px;
+  max-width: 350px;
+}
+
+/* Imagen arriba */
+.event-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Contenido */
+.event-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+/* Título con máx 2 líneas */
+.fixed-title {
+  height: 48px;                   
+  line-height: 1.2;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ubicación + fecha */
+.event-location,
+.event-date {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* Botón Ver Más */
+.ver-mas-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #2e86de;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;        
+}
+
+/* Botón Guardar */
+.save-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #2e86de;
+  color: white;
+}
+
+/* Cuando está guardado → otro color */
+.save-btn.saved {
+  background-color: #213af0;  
+  color: #fff;
 }
