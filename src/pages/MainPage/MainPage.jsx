@@ -5,10 +5,35 @@ import { useEffect, useState } from "react";
 import "./MainPage.css";
 import { getToken } from "../../api/auth";
 
-
 export default function MainPage() {
   const [events, setEvents] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  
+  // Estados para los filtros
+  const [filters, setFilters] = useState({
+    categories: [],
+    sources: [],
+    location: "",
+    free_text: "",
+    prefer_free: false
+  });
+
+  // Opciones disponibles para los filtros (ajustar según tu backend)
+  const filterOptions = {
+    categories: [
+      "Artes y Cultura",
+      "Música y Espectáculos",
+      "Educación y Humanidades",
+      "Patrimonio y Museos",
+      "Turismo y Medio Ambiente",
+      "Gastronomía y Ferias"
+    ],
+    sources: [
+      "ChileCultura",
+      "DisfrutaSantiago"
+    ]
+  };
 
   // === MAPA DE MESES EN ESPAÑOL ===
   const monthMap = {
@@ -31,7 +56,6 @@ export default function MainPage() {
     try {
       const year = new Date().getFullYear();
 
-      // Caso simple: "11 Marzo"
       if (!dateStr.includes("-")) {
         const [dayStr, monthStr] = dateStr.trim().split(" ");
         return {
@@ -40,15 +64,10 @@ export default function MainPage() {
         };
       }
 
-      // Caso con guion:
-      // "27 - 29 Noviembre"
-      // "05 Noviembre - 20 Diciembre"
       const parts = dateStr.split("-").map(p => p.trim());
-
       const startDay = parseInt(parts[0]);
       const endParts = parts[1].split(" ");
 
-      // Caso: "27 - 29 Noviembre"
       if (endParts.length === 1) {
         const endDay = parseInt(endParts[0]);
         const monthStr = parts[1].split(" ")[1] || endParts[1];
@@ -60,7 +79,6 @@ export default function MainPage() {
         };
       }
 
-      // Caso: "05 Noviembre - 20 Diciembre"
       const startMonthStr = parts[0].split(" ")[1] || endParts[1];
       const endDay = parseInt(endParts[0]);
       const endMonthStr = endParts[1];
@@ -87,7 +105,7 @@ export default function MainPage() {
       sorted.sort((a, b) => {
         const da = parseDateRange(a.date);
         const db = parseDateRange(b.date);
-        return da.start - db.start; // más reciente = fecha final mayor
+        return da.start - db.start;
       });
     }
 
@@ -95,7 +113,7 @@ export default function MainPage() {
       sorted.sort((a, b) => {
         const da = parseDateRange(a.date);
         const db = parseDateRange(b.date);
-        return db.end - da.end; // más antiguo = inicio menor
+        return db.end - da.end;
       });
     }
 
@@ -109,37 +127,93 @@ export default function MainPage() {
 
     if (type === "destacado") {
       sorted.sort((a, b) => {
-        // Primero: más guardados
         if (b.saved_count !== a.saved_count) {
           return b.saved_count - a.saved_count;
         }
-        // Desempate: orden alfabético
         return a.title.localeCompare(b.title);
       });
     }
-
 
     setEvents(sorted);
     setShowOptions(false);
   };
 
-  // === CARGA DE EVENTOS DESDE EL BACKEND ===
-  useEffect(() => {
+  // === FUNCIÓN PARA APLICAR FILTROS ===
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => {
+      if (filterType === 'categories' || filterType === 'sources') {
+        const currentArray = prev[filterType];
+        const newArray = currentArray.includes(value)
+          ? currentArray.filter(item => item !== value)
+          : [...currentArray, value];
+        return { ...prev, [filterType]: newArray };
+      }
+      return { ...prev, [filterType]: value };
+    });
+  };
+
+  // === FUNCIÓN PARA LIMPIAR FILTROS ===
+  const clearFilters = () => {
+    setFilters({
+      categories: [],
+      sources: [],
+      location: "",
+      free_text: "",
+      prefer_free: false
+    });
+  };
+
+  // === FUNCIÓN PARA CARGAR EVENTOS CON FILTROS ===
+  const loadEvents = async () => {
     const token = getToken();
+    const base = "http://localhost:8000/api/events/";
+    const params = new URLSearchParams();
 
-    fetch("http://localhost:8000/api/events/", {
-      headers: token
-        ? { Authorization: `Bearer ${token}` }
-        : {}
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Error al cargar eventos");
-        return res.json();
-      })
-      .then((data) => setEvents(data.results))
-      .catch((err) => console.error("Error al cargar datos:", err));
-  }, []);
+    // Construir query string según API: usar category_general, category_specific y source
+    if (filters.categories.length) {
+      // El backend espera `category_general`; enviamos cada categoría seleccionada.
+      filters.categories.forEach((c) => params.append("category_general", c));
+    } else {
+      // Asegurar que el parámetro exista aunque esté vacío (como en el ejemplo)
+      params.append("category_general", "");
+    }
 
+    // No tenemos categorías específicas en esta UI, enviar siempre parámetro (vacío si no hay)
+    params.append("category_specific", "");
+
+    if (filters.sources.length) {
+      // El backend espera `source` (singular). Enviamos una entrada por cada fuente seleccionada.
+      filters.sources.forEach((s) => params.append("source", s));
+    } else {
+      params.append("source", "");
+    }
+
+    // Location (si está vacío, también lo enviamos como cadena vacía para consistencia)
+    if (filters.location) params.append("location", filters.location);
+    else params.append("location", "");
+
+    if (filters.free_text) params.append("free_text", filters.free_text);
+    if (filters.prefer_free) params.append("prefer_free", "true");
+
+    const url = base + (params.toString() ? `?${params.toString()}` : "");
+
+    try {
+      const res = await fetch(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      
+      if (!res.ok) throw new Error("Error al cargar eventos");
+      const data = await res.json();
+      setEvents(data.results);
+    } catch (err) {
+      console.error("Error al cargar datos:", err);
+    }
+  };
+
+  // === CARGAR EVENTOS AL MONTAR Y CUANDO CAMBIEN LOS FILTROS ===
+  useEffect(() => {
+    loadEvents();
+  }, [filters]);
 
   return (
     <div className="mainpage-wrapper">
@@ -150,7 +224,14 @@ export default function MainPage() {
           <h2 className="titulo-seccion">🎭 Panoramas destacados</h2>
 
           <div className="filtros-derecha">
-            <button className="btn-filtro">Filtro</button>
+            <button 
+              className="btn-filtro"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              Filtro {Object.values(filters).some(f => 
+                (Array.isArray(f) && f.length) || (typeof f === 'string' && f) || (typeof f === 'boolean' && f)
+              ) && "✓"}
+            </button>
 
             <div className="ordenar-container">
               <button
@@ -164,7 +245,7 @@ export default function MainPage() {
                 <ul className="ordenar-menu">
                   <li onClick={() => sortEvents("destacado")}>Destacado</li>
                   <li onClick={() => sortEvents("recientes")}>Fecha: más cercanos primero</li>
-                  <li onClick={() => sortEvents("antiguos")}>Fecha: más lejanos primero </li>
+                  <li onClick={() => sortEvents("antiguos")}>Fecha: más lejanos primero</li>
                   <li onClick={() => sortEvents("nombre_asc")}>Nombre ascendente</li>
                   <li onClick={() => sortEvents("nombre_desc")}>Nombre descendente</li>
                 </ul>
@@ -172,6 +253,94 @@ export default function MainPage() {
             </div>
           </div>
         </div>
+
+        {/* === PANEL DE FILTROS === */}
+        {showFilters && (
+          <div className="filtros-panel">
+            <div className="filtros-content">
+              
+              {/* Búsqueda por texto */}
+              <div className="filtro-grupo">
+                <label>🔍 Buscar:</label>
+                <input
+                  type="text"
+                  placeholder="Buscar eventos..."
+                  value={filters.free_text}
+                  onChange={(e) => handleFilterChange('free_text', e.target.value)}
+                  className="filtro-input"
+                />
+              </div>
+
+              {/* Categorías */}
+              <div className="filtro-grupo">
+                <label>📁 Categorías:</label>
+                <div className="filtro-opciones">
+                  {filterOptions.categories.map(cat => (
+                    <label key={cat} className="filtro-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={filters.categories.includes(cat)}
+                        onChange={() => handleFilterChange('categories', cat)}
+                      />
+                      {cat}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Fuentes */}
+              <div className="filtro-grupo">
+                <label>🎫 Fuentes:</label>
+                <div className="filtro-opciones">
+                  {filterOptions.sources.map(src => (
+                    <label key={src} className="filtro-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={filters.sources.includes(src)}
+                        onChange={() => handleFilterChange('sources', src)}
+                      />
+                      {src}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ubicación */}
+              <div className="filtro-grupo">
+                <label>📍 Ubicación:</label>
+                <input
+                  type="text"
+                  placeholder="Ej: Santiago, Providencia..."
+                  value={filters.location}
+                  onChange={(e) => handleFilterChange('location', e.target.value)}
+                  className="filtro-input"
+                />
+              </div>
+
+              {/* Eventos gratuitos */}
+              <div className="filtro-grupo">
+                <label className="filtro-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={filters.prefer_free}
+                    onChange={(e) => handleFilterChange('prefer_free', e.target.checked)}
+                  />
+                  💰 Preferir eventos gratuitos
+                </label>
+              </div>
+
+              {/* Botones de acción */}
+              <div className="filtros-acciones">
+                <button onClick={clearFilters} className="btn-limpiar">
+                  Limpiar filtros
+                </button>
+                <button onClick={() => setShowFilters(false)} className="btn-aplicar">
+                  Aplicar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* === GRID === */}
         <div className="event-grid">
@@ -198,7 +367,12 @@ export default function MainPage() {
                 color: "#555"
               }}
             >
-              Cargando panoramas...
+              {Object.values(filters).some(f => 
+                (Array.isArray(f) && f.length) || (typeof f === 'string' && f) || (typeof f === 'boolean' && f)
+              ) 
+                ? "No se encontraron eventos con estos filtros"
+                : "Cargando panoramas..."
+              }
             </p>
           )}
         </div>

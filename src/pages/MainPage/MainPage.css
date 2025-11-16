@@ -49,6 +49,11 @@
   transform: translateY(-1px);
 }
 
+.btn-filtro:active,
+.btn-ordenar:active {
+  transform: translateY(0);
+}
+
 /* === MENÚ DESPLEGABLE === */
 .ordenar-container {
   position: relative;
@@ -64,7 +69,7 @@
   margin: 0;
   padding: 8px 0;
   border-radius: 8px;
-  width: 180px;
+  width: 240px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   z-index: 20;
   font-family: "Inter", sans-serif;
@@ -74,10 +79,158 @@
   padding: 10px 16px;
   cursor: pointer;
   transition: background 0.2s ease;
+  font-size: 14px;
 }
 
 .ordenar-menu li:hover {
   background: rgba(46, 134, 222, 0.1);
+}
+
+/* === PANEL DE FILTROS === */
+.filtros-panel {
+  background: white;
+  border-radius: 12px;
+  margin: 0 60px 20px 60px;
+  padding: 30px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+  font-family: "Inter", sans-serif;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filtros-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filtro-grupo > label:first-child {
+  font-weight: 600;
+  color: #111;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+}
+
+.filtro-input {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 500px;
+  background-color: #fafafa;
+}
+
+.filtro-input:focus {
+  outline: none;
+  border-color: #2E86DE;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(46, 134, 222, 0.1);
+}
+
+.filtro-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.filtro-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  user-select: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-family: "Inter", sans-serif;
+  border: 2px solid #e0e0e0;
+  background-color: #fafafa;
+}
+
+.filtro-checkbox:hover {
+  background-color: rgba(46, 134, 222, 0.08);
+  border-color: #2E86DE;
+}
+
+.filtro-checkbox input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #2E86DE;
+}
+
+.filtro-checkbox input[type="checkbox"]:checked + * {
+  font-weight: 500;
+}
+
+.filtros-acciones {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.btn-limpiar,
+.btn-aplicar {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Inter", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-limpiar {
+  background-color: #f5f5f5;
+  color: #555;
+  border: 2px solid #e0e0e0;
+}
+
+.btn-limpiar:hover {
+  background-color: #e8e8e8;
+  border-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+.btn-aplicar {
+  background-color: #2E86DE;
+  color: white;
+}
+
+.btn-aplicar:hover {
+  background-color: rgba(46, 134, 222, 0.85);
+  transform: translateY(-1px);
+}
+
+.btn-limpiar:active,
+.btn-aplicar:active {
+  transform: translateY(0);
 }
 
 /* === GRILLA DE EVENTOS === */
@@ -97,6 +250,11 @@
 
   .event-grid {
     padding: 20px 30px;
+  }
+
+  .filtros-panel {
+    margin: 0 30px 20px 30px;
+    padding: 24px;
   }
 }
 
@@ -119,9 +277,43 @@
 
   .ordenar-menu {
     width: 100%;
+    right: 0;
   }
 
   .titulo-seccion {
     font-size: 1.4rem;
+  }
+
+  .filtros-panel {
+    margin: 0 20px 20px 20px;
+    padding: 20px;
+  }
+
+  .filtro-input {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .filtro-opciones {
+    gap: 8px;
+  }
+
+  .filtro-checkbox {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .filtros-acciones {
+    flex-direction: column;
+  }
+
+  .btn-limpiar,
+  .btn-aplicar {
+    width: 100%;
+  }
+
+  .event-grid {
+    padding: 20px;
+    gap: 20px;
   }
 }
