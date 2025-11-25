@@ -1,0 +1,73 @@
+/* Main container, identical width/padding to ProfilePage */
+.comments-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Page title */
+.comments-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.comments-event-title {
+  color: #1d5bc9;
+}
+
+/* Divider (same style as ProfilePage) */
+.comments-divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+/* Empty/loading messages */
+.comments-loading,
+.comments-empty {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+/* Comments list container */
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual comment card */
+.comment-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  background: #fafafa;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Header: username + date */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.comment-user {
+  font-size: 1.1rem;
+  color: #1d5bc9;
+}
+
+.comment-date {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Main text */
+.comment-text {
+  color: #333;
+  line-height: 1.5rem;
+  white-space: pre-wrap;
+}

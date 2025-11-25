@@ -37,3 +37,10 @@ export async function getEvents(filters = {}) {
     }
   }
 }
+
+export async function getComments(eventId) {
+  const res = await fetch(`http://localhost:8000/api/events/${eventId}/comments/`);
+  if (!res.ok) throw new Error("Failed to fetch comments");
+  return await res.json();
+}
+

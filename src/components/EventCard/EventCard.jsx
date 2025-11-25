@@ -88,6 +88,10 @@ export default function EventCard({
           <button className="primary ver-mas-btn">Ver más</button>
         </a>
 
+        <a href={`/event/${id}/comments`}>
+          <button className="primary ver-mas-btn">Ver comentarios</button>
+        </a>
+
         {/* BOTÓN GUARDAR */}
         <button
           className={`save-btn ${saved ? "saved" : ""}`}
