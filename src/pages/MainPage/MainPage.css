@@ -3,13 +3,14 @@
 /* === BARRA DE FILTROS === */
 .barra-filtros {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 20px 60px;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 60px 10px 60px;
   background-color: #f4f4f4;
   flex-wrap: wrap;
 }
+
 
 /* === TÍTULO === */
 .titulo-seccion {
@@ -89,13 +90,16 @@
 /* === PANEL DE FILTROS === */
 .filtros-panel {
   background: white;
-  border-radius: 12px;
-  margin: 0 60px 20px 60px;
-  padding: 30px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  /* antes: margin: 0 60px 20px 60px; */
+  margin: 12px auto 24px auto;
+  padding: 20px 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   animation: slideDown 0.3s ease-out;
   font-family: "Inter", sans-serif;
+  max-width: 1100px;           /* 👈 más angosto y centrado */
 }
+
 
 @keyframes slideDown {
   from {
@@ -111,33 +115,35 @@
 .filtros-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;              /* antes 24px → menos separación vertical */
 }
 
 .filtro-grupo {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;               /* antes 12px */
 }
 
 .filtro-grupo > label:first-child {
   font-weight: 600;
   color: #111;
-  font-size: 15px;
+  font-size: 14px;        /* antes 15px */
   font-family: "Inter", sans-serif;
 }
 
+
 .filtro-input {
-  padding: 12px 16px;
+  padding: 10px 14px;     /* antes 12px 16px → un poco más chico */
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;        /* antes 15px */
   font-family: "Inter", sans-serif;
   transition: all 0.2s ease;
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;       /* antes 500px, da la sensación de panel más liviano */
   background-color: #fafafa;
 }
+
 
 .filtro-input:focus {
   outline: none;
@@ -149,23 +155,23 @@
 .filtro-opciones {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 8px 0;
+  gap: 8px;               /* antes 10px */
+  padding: 4px 0;         /* antes 8px → menos alto */
 }
 
 .filtro-checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;               /* antes 8px */
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;        /* antes 14px → se ve más delicado */
   color: #333;
   user-select: none;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 6px 12px;      /* antes 8px 14px */
+  border-radius: 999px;   /* antes 8px → ahora pastillita redonda */
   transition: all 0.2s ease;
   font-family: "Inter", sans-serif;
-  border: 2px solid #e0e0e0;
+  border: 1px solid #e0e0e0; /* antes 2px, se ve más suave */
   background-color: #fafafa;
 }
 
@@ -173,6 +179,7 @@
   background-color: rgba(46, 134, 222, 0.08);
   border-color: #2E86DE;
 }
+
 
 .filtro-checkbox input[type="checkbox"] {
   cursor: pointer;
@@ -187,11 +194,13 @@
 
 .filtros-acciones {
   display: flex;
-  gap: 12px;
-  margin-top: 8px;
-  padding-top: 24px;
-  border-top: 2px solid #f0f0f0;
+  justify-content: flex-end; /* botones alineados a la derecha */
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 16px;         /* antes 24px */
+  border-top: 1px solid #f0f0f0; /* antes 2px */
 }
+
 
 .btn-limpiar,
 .btn-aplicar {
@@ -285,8 +294,8 @@
   }
 
   .filtros-panel {
-    margin: 0 20px 20px 20px;
-    padding: 20px;
+    margin: 8px 16px 20px 16px;
+    padding: 18px;
   }
 
   .filtro-input {
@@ -299,8 +308,8 @@
   }
 
   .filtro-checkbox {
-    font-size: 13px;
-    padding: 6px 12px;
+    font-size: 12px;
+    padding: 5px 10px;
   }
 
   .filtros-acciones {
@@ -316,4 +325,112 @@
     padding: 20px;
     gap: 20px;
   }
+}
+
+
+
+/* === TÍTULO PRINCIPAL === */
+.barra-filtros-izquierda {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.titulo-seccion {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.5px;
+}
+
+.emoji-titulo {
+  font-size: 1.9rem;
+}
+
+/* Línea decorativa bajo el título (opcional pero queda muy lindo) */
+.barra-filtros-izquierda::after {
+  content: "";
+  margin-top: 4px;
+  width: 72px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2E86DE, #4dabf7);
+}
+
+/* Texto “Panoramas ordenados por…” */
+.sort-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 8px;
+}
+
+.sort-info-label {
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+}
+
+.sort-info-chip {
+  background: #e3f2ff;
+  color: #0066cc;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  font-family: "Inter", sans-serif;
+}
+
+
+/* === FILTROS ACTIVOS (chips) === */
+.filtros-activos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 60px 0 60px;
+}
+
+.filtro-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #e9f3ff;
+  color: #0a66c2;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.filtro-chip:hover {
+  background: #d6e9ff;
+}
+
+.chip-x {
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+
+
+.filtros-aplicados-titulo {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.filtros-aplicados-titulo .sort-info-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
 }
