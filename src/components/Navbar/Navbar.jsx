@@ -12,12 +12,15 @@ export default function Navbar() {
   const navigate = useNavigate();
   const loggedIn = Boolean(localStorage.getItem("token"));
 
-
+  // 🔹 estado del usuario
   const [user, setUser] = useState({
     name: localStorage.getItem("name"),
     email: localStorage.getItem("email"),
-    token: localStorage.getItem("token")
+    token: localStorage.getItem("token"),
   });
+
+  // 🔹 estado para el texto de búsqueda
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     const updateUser = () => {
@@ -28,9 +31,9 @@ export default function Navbar() {
       });
     };
 
-  window.addEventListener("storage", updateUser);
-  return () => window.removeEventListener("storage", updateUser);
-}, []);
+    window.addEventListener("storage", updateUser);
+    return () => window.removeEventListener("storage", updateUser);
+  }, []);
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -47,6 +50,17 @@ export default function Navbar() {
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [showTooltip]);
+
+  // 🔹 función que se llama al hacer clic en la lupa o presionar Enter
+  const handleSearch = () => {
+    const query = searchText.trim();
+    if (query) {
+      navigate(`/?search=${encodeURIComponent(query)}`);
+    } else {
+      // si está vacío, solo vamos a la página principal sin filtro
+      navigate(`/`);
+    }
+  };
 
   return (
     <>
@@ -70,15 +84,20 @@ export default function Navbar() {
 
           <div className="actions">
             {loggedIn ? (
-              <button className="navbar-login" onClick={() => navigate("/profile")}>
+              <button
+                className="navbar-login"
+                onClick={() => navigate("/profile")}
+              >
                 <FaUser /> Perfil
               </button>
             ) : (
-              <button className="navbar-login" onClick={() => navigate("/login")}>
+              <button
+                className="navbar-login"
+                onClick={() => navigate("/login")}
+              >
                 <FaUser /> Iniciar sesión
               </button>
             )}
-
           </div>
         </div>
       </div>
@@ -99,14 +118,22 @@ export default function Navbar() {
           </div>
 
           <div className="menu-search">
-            <input type="text" placeholder="Buscar panoramas..." />
-            <button>
+            <input
+              type="text"
+              placeholder="Buscar panoramas..."
+              value={searchText}                         // 🔹 valor controlado
+              onChange={(e) => setSearchText(e.target.value)} // 🔹 actualiza estado
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();   // 🔹 buscar con Enter
+              }}
+            />
+            <button onClick={handleSearch}>
               <FaSearch />
             </button>
           </div>
         </div>
       </nav>
-      
+
       {/* === TOOLTIP DE UBICACIÓN === */}
       {showTooltip && (
         <div
@@ -134,7 +161,10 @@ export default function Navbar() {
               onChange={(e) => setAddress(e.target.value)}
             />
 
-            <button className="confirm-btn" onClick={() => setShowTooltip(false)}>
+            <button
+              className="confirm-btn"
+              onClick={() => setShowTooltip(false)}
+            >
               Confirmar
             </button>
           </div>
@@ -144,3 +174,4 @@ export default function Navbar() {
     </>
   );
 }
+
