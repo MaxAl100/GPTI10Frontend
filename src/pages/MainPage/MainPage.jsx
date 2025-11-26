@@ -11,6 +11,8 @@ export default function MainPage() {
   const [events, setEvents] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [nextPage, setNextPage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Filtros
   const [filters, setFilters] = useState({
@@ -328,36 +330,41 @@ export default function MainPage() {
 
 
   // === FUNCIÓN PARA CARGAR EVENTOS CON FILTROS ===
-  const loadEvents = async () => {
+  const loadEvents = async (url = null, append = false) => {
     const token = getToken();
     const base = "http://localhost:8000/api/events/";
     const params = new URLSearchParams();
 
-    if (filters.categories.length) {
-      filters.categories.forEach((c) => params.append("category_general", c));
-    } else {
-      params.append("category_general", "");
+    setLoading(true);
+
+    if (!url) {
+      // first load (page 1)
+      if (filters.categories.length) {
+        filters.categories.forEach((c) => params.append("category_general", c));
+      } else {
+        params.append("category_general", "");
+      }
+
+      params.append("category_specific", "");
+
+      if (filters.sources.length) {
+        filters.sources.forEach((s) => params.append("source", s));
+      } else {
+        params.append("source", "");
+      }
+
+      if (filters.location) params.append("location", filters.location);
+      else params.append("location", "");
+
+      if (filters.free_text) {
+        params.append("free_text", filters.free_text);
+        params.append("search", filters.free_text);
+      }
+
+      if (filters.prefer_free) params.append("prefer_free", "true");
+
+      url = base + (params.toString() ? `?${params.toString()}` : "");
     }
-
-    params.append("category_specific", "");
-
-    if (filters.sources.length) {
-      filters.sources.forEach((s) => params.append("source", s));
-    } else {
-      params.append("source", "");
-    }
-
-    if (filters.location) params.append("location", filters.location);
-    else params.append("location", "");
-
-    if (filters.free_text) {
-      // Enviamos ambos nombres por si el backend usa uno u otro
-      params.append("free_text", filters.free_text);
-      params.append("search", filters.free_text);
-    }
-    if (filters.prefer_free) params.append("prefer_free", "true");
-
-    const url = base + (params.toString() ? `?${params.toString()}` : "");
 
     try {
       const res = await fetch(url, {
@@ -366,14 +373,23 @@ export default function MainPage() {
 
       if (!res.ok) throw new Error("Error al cargar eventos");
       const data = await res.json();
-      setEvents(data.results);
+
+      setEvents((prev) =>
+        append ? [...prev, ...data.results] : data.results
+      );
+
+      setNextPage(data.next);
     } catch (err) {
       console.error("Error al cargar datos:", err);
     }
+
+    setLoading(false);
   };
 
   // === CARGAR EVENTOS AL MONTAR Y CUANDO CAMBIEN LOS FILTROS ===
   useEffect(() => {
+    setEvents([]);
+    setNextPage(null);
     loadEvents();
   }, [filters]);
 
@@ -644,6 +660,25 @@ export default function MainPage() {
             </p>
           )}
         </div>
+        {/* === BOTÓN CARGAR MÁS === */}
+        {nextPage && (
+          <button
+            onClick={() => loadEvents(nextPage, true)}
+            style={{
+              display: "block",
+              margin: "30px auto",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              background: "#333",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "16px",
+            }}
+          >
+            {loading ? "Cargando..." : "Cargar más"}
+          </button>
+        )}
       </main>
     </div>
   );
