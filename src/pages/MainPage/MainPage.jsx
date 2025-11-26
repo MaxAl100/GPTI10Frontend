@@ -579,7 +579,7 @@ export default function MainPage() {
       </div>
 
       {/* Eventos gratuitos */}
-      <div className="filtro-grupo">
+      {/* <div className="filtro-grupo">
         <label className="filtro-checkbox">
           <input
             type="checkbox"
@@ -593,7 +593,7 @@ export default function MainPage() {
           />
           💰 Preferir eventos gratuitos
         </label>
-      </div>
+      </div> */}
 
       {/* Botones de acción */}
       <div className="filtros-acciones">
