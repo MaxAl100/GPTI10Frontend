@@ -397,39 +397,32 @@ export default function MainPage() {
 )}
 
 <div className="filtros-activos">
+
+  {/* Free text */}
   {filters.free_text && (
-    <div
-      className="filtro-chip"
-      onClick={() => handleFilterRemove("free_text")}
-    >
+    <div className="filtro-chip" onClick={() => handleFilterRemove("free_text")}>
       {filters.free_text}
       <span className="chip-x">✕</span>
     </div>
   )}
 
-
+  {/* Location */}
   {filters.location && (
-    <div
-      className="filtro-chip"
-      onClick={() => handleFilterRemove("location")}
-    >
+    <div className="filtro-chip" onClick={() => handleFilterRemove("location")}>
       {filters.location}
       <span className="chip-x">✕</span>
     </div>
   )}
 
-
+  {/* Prefer Free */}
   {filters.prefer_free && (
-    <div
-      className="filtro-chip"
-      onClick={() => handleFilterRemove("prefer_free")}
-    >
+    <div className="filtro-chip" onClick={() => handleFilterRemove("prefer_free")}>
       Gratuitos
       <span className="chip-x">✕</span>
     </div>
   )}
 
-
+  {/* Sources */}
   {filters.sources.map((s) => (
     <div
       key={s}
@@ -441,17 +434,17 @@ export default function MainPage() {
     </div>
   ))}
 
-
-
-  {filters.sources.map((s) => (
-    <div key={s} className="filtro-chip" onClick={() => handleFilterChange("sources", s)}>
-      {s}
+  {/* Categories (single radio selection) */}
+  {filters.categories && (
+    <div
+      className="filtro-chip"
+      onClick={() => handleFilterRemove("categories", filters.categories)}
+    >
+      {filters.categories}
       <span className="chip-x">✕</span>
     </div>
-  ))}
+  )}
 </div>
-
-
 
 
 
@@ -523,11 +516,11 @@ export default function MainPage() {
               <input
                 type="radio"
                 name="category"
-                checked={pendingFilters.categories === cat}
+                checked={pendingFilters.categories.includes(cat)}
                 onChange={() =>
                   setPendingFilters((prev) => ({
                     ...prev,
-                    categories: [cat], 
+                    categories: [cat],
                   }))
                 }
               />
