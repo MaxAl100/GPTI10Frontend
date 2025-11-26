@@ -451,15 +451,19 @@ export default function MainPage() {
   ))}
 
   {/* Categories (single radio selection) */}
-  {filters.categories && (
-    <div
-      className="filtro-chip"
-      onClick={() => handleFilterRemove("categories", filters.categories)}
-    >
-      {filters.categories}
-      <span className="chip-x">✕</span>
-    </div>
-  )}
+  {/* Categories (single radio selection) */}
+  {filters.categories.length > 0 &&
+    filters.categories.map((cat) => (
+      <div
+        key={cat}
+        className="filtro-chip"
+        onClick={() => handleFilterRemove("categories", cat)}
+      >
+        {cat}
+        <span className="chip-x">✕</span>
+      </div>
+    ))}
+
 </div>
 
 
