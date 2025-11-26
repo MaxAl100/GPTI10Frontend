@@ -159,6 +159,7 @@ export default function Navbar() {
               placeholder="Ej: Providencia, Ñuñoa..."
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              readOnly
             />
 
             <button

@@ -521,14 +521,13 @@ export default function MainPage() {
           {filterOptions.categories.map((cat) => (
             <label key={cat} className="filtro-checkbox">
               <input
-                type="checkbox"
-                checked={pendingFilters.categories.includes(cat)}
+                type="radio"
+                name="category"
+                checked={pendingFilters.categories === cat}
                 onChange={() =>
                   setPendingFilters((prev) => ({
                     ...prev,
-                    categories: prev.categories.includes(cat)
-                      ? prev.categories.filter((c) => c !== cat)
-                      : [...prev.categories, cat],
+                    categories: [cat], 
                   }))
                 }
               />
